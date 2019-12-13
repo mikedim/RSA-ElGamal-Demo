@@ -4,7 +4,7 @@ print("------WELCOME ALICE: ElGamal Encryption------")
 print("Generating keys, this may take a few seconds")
 #Generate large prime n
 #paremeter=num of digits
-n=support.primegen(6)
+n=support.primegen(20)
 
 #Alice randomly choose generator g and secret key a
 g=support.getprimroot(n)

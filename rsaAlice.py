@@ -3,11 +3,12 @@ import support
 print("------WELCOME Alice: RSA Encryption------")
 
 #Initialize, generate p*q=N
-#paremeter=num of digits
-p=support.primegen(4)
-q=support.primegen(4)
-n=p*q
 
+####V1 IMPLEMENTATION, SEE V2 FOR UPDATES
+#paremeter=num of digits
+p=support.primegen(16)
+q=support.primegen(16)
+n=p*q
 
 #select e coprime to phi(n)
 e=support.rsakeygen(p,q)

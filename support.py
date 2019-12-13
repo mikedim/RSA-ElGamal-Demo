@@ -117,17 +117,69 @@ def isPrime(n,k):
   
     return True;
     
-    
- #Leverage Miller-Rabian and isPrime to generate a prime number
- #accepts input s for size of number. s=digits, i.e. s=6 = range(100000,999999)
-def primegen(s):
-	k=4
+
+
+
+#Randint to generate small primes to feed BBS
+def blumprimegen(s):
+	k=4#seed
 	p=False
-	while not p:
+	b=False
+	while not p or not b:
 		n=random.randint(10**(s-1),10**s-1)
 		p=isPrime(n,k)
-	
+		if n%4==3:
+			b=True
 	return n
+	
+	
+#Blum Blum Shub Pseudorandom Number Generator
+#k is bit size
+def bbs(k):
+	#define next usable prime
+	p=blumprimegen(3)
+	q=blumprimegen(3)
+	n=p*q
+	gcd=''
+	#Generate seed <n and coprime to n
+	while gcd !=1:
+		seed=random.randint(1,n-1)
+		gcd,_,_=xeuclid(seed,n)
+		
+	s=seed
+	sout=''
+	
+	#iterate desired amount of times
+	for i in range(0,k):	
+		s=fastexpo(s,2,n)
+		b=s%2
+		sout+=str(b)	
+	
+	#turn random binary output back to int
+	bbsint=int(sout,2)
+	
+	bbsint
+	
+	return bbsint
+
+#take input p and increment by 1 until p is prime
+def nextprime(p):
+	k=4 #seed
+	stop=False
+	while not stop:
+		if isPrime(p,k) and p%4==3:
+			pout=p
+			stop=True
+		else:
+			p=p+1
+			
+	return pout	
+
+def primegen(k):
+	n=bbs(k)
+	n=nextprime(n)
+	return n
+	
 
 #RSA generate e value coprime to phi(n)
 def rsakeygen(p,q):
@@ -175,3 +227,17 @@ def polrho(n):
         x=f(x); y=f(f(y))
         d,_,_=xeuclid(abs(x-y),n)
     if d != n: return d
+
+####################################################
+###LEGACY CODE NO IN USE FOR V2###
+####################################################
+#Leverage Miller-Rabian and isPrime to generate a prime number
+#accepts input s for size of number. s=digits, i.e. s=6 = range(100000,999999)
+#def primegen(s):
+#	k=4
+#	p=False
+#	while not p:
+#		n=random.randint(10**(s-1),10**s-1)
+#		p=isPrime(n,k)
+#
+#	return n
